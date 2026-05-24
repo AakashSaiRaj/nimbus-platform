@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/AakashSaiRaj/nimbus-platform.git
+    targetRevision: main
+    path: gitops/apps   # directory containing other Applications
+    directory:
+      recurse: true     # find Applications in subdirectories too
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
