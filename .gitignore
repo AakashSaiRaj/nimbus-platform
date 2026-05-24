@@ -1,0 +1,56 @@
+# Terraform - provider binaries, hundreds of MB, regenerable via terraform init
+**/.terraform/
+
+# Terraform state - SECRETS in plaintext. Never commit.
+*.tfstate
+*.tfstate.*
+
+# Terraform crash dumps
+crash.log
+crash.*.log
+
+# Terraform variable values - usually contain secrets/account-specific data
+*.tfvars
+*.tfvars.json
+
+# Local overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local CLI config
+.terraformrc
+terraform.rc
+
+# Plan output files
+tfplan
+*.tfplan
+
+# Allow lockfile - it should be committed
+!.terraform.lock.hcl
+
+# Allow example tfvars
+!*.tfvars.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example
