@@ -52,6 +52,11 @@ resource "helm_release" "argocd" {
     name  = "redis-ha.enabled"
     value = "false"
   }
+  set {
+  name  = "configs.params.server\\.insecure"
+  value = "true"
+}
+
 
   depends_on = [module.eks]
 }
