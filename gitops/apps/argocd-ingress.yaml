@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  annotations:
+    # Tells ALB Controller to handle this Ingress
+    kubernetes.io/ingress.class: alb
+
+    # Internet-facing (vs internal=private VPC)
+    alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # Use IP target type (works with VPC CNI + private nodes)
+    alb.ingress.kubernetes.io/target-type: ip
+
+    # Listen on port 80 only
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+
+    # Backend protocol: HTTP because we set --insecure on Argo CD
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+
+    # Use a unique ALB for this ingress (don't share with other ingresses)
+    alb.ingress.kubernetes.io/group.name: argocd
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-cd-argocd-server
+                port:
+                  number: 80
+
